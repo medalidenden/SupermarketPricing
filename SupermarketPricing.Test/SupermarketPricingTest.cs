@@ -28,10 +28,10 @@ namespace SupermarketPricing.Test
         {
             //Arrange
             Setup();
-            _superMarketPricer.AddToShoppingList(new Product("Soda"));
-            _superMarketPricer.AddToShoppingList(new Product("Fromage"));
-            _superMarketPricer.AddToShoppingList(new Product("Portable"));
-            _superMarketPricer.AddToShoppingList(new Product("Pomme"));
+            _superMarketPricer.AddToShoppingList(new Product("Soda", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Fromage", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Portable", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Pomme", ProductUnit.Kilo));
 
             //Act
             var result = _superMarketPricer.CalculateTotalAmount();
@@ -45,13 +45,13 @@ namespace SupermarketPricing.Test
         {
             // Arrange
             Setup();
-            _superMarketPricer.AddToShoppingList(new Product("Soda"));
-            _superMarketPricer.AddToShoppingList(new Product("Soda"));
-            _superMarketPricer.AddToShoppingList(new Product("Soda"));
-            _superMarketPricer.AddToShoppingList(new Product("Fromage"));
-            _superMarketPricer.AddToShoppingList(new Product("Fromage"));
-            _superMarketPricer.AddToShoppingList(new Product("Portable"));
-            _superMarketPricer.AddToShoppingList(new Product("Pomme"));
+            _superMarketPricer.AddToShoppingList(new Product("Soda", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Soda", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Soda", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Fromage", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Fromage", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Portable", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Pomme", ProductUnit.Each));
 
             //Act
             var result = _superMarketPricer.CalculateTotalAmount();
@@ -65,22 +65,40 @@ namespace SupermarketPricing.Test
         {
             //Arrange
             Setup();
-            _superMarketPricer.AddToShoppingList(new Product("Soda"));
-            _superMarketPricer.AddToShoppingList(new Product("Fromage"));
-            _superMarketPricer.AddToShoppingList(new Product("Portable"));
-            _superMarketPricer.AddToShoppingList(new Product("Pomme"));
-            _superMarketPricer.AddToShoppingList(new Product("Banane"));
-            _superMarketPricer.AddToShoppingList(new Product("Banane"));
-            _superMarketPricer.AddToShoppingList(new Product("Banane"));
-            _superMarketPricer.AddToShoppingList(new Product("Banane"));
-            _superMarketPricer.AddToShoppingList(new Product("Banane"));
-            _superMarketPricer.AddToShoppingList(new Product("Banane"));
+            _superMarketPricer.AddToShoppingList(new Product("Soda", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Fromage", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Portable", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Pomme", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Banane", ProductUnit.Kilo));
+            _superMarketPricer.AddToShoppingList(new Product("Banane", ProductUnit.Kilo));
+            _superMarketPricer.AddToShoppingList(new Product("Banane", ProductUnit.Kilo));
+            _superMarketPricer.AddToShoppingList(new Product("Banane", ProductUnit.Kilo));
+            _superMarketPricer.AddToShoppingList(new Product("Banane", ProductUnit.Kilo));
+            _superMarketPricer.AddToShoppingList(new Product("Banane", ProductUnit.Kilo));
 
             //Act
             var result = _superMarketPricer.CalculateTotalAmount();
 
             //Assert
             Assert.Equal(217.8M, result);
+        }
+
+        [Fact]
+        public void ReturnTotalAmountForWeightedProducts()
+        {
+            //Arrange
+            Setup();
+            _superMarketPricer.AddToShoppingList(new Product("Portable", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Pomme", ProductUnit.Each));
+            _superMarketPricer.AddToShoppingList(new Product("Lait", ProductUnit.Liter));
+            _superMarketPricer.AddToShoppingList(new Product("Lait", ProductUnit.Liter));
+            _superMarketPricer.AddToShoppingList(new Product("Lait", ProductUnit.Liter));
+
+            //Act
+            var result = _superMarketPricer.CalculateTotalAmount();
+
+            //Assert
+            Assert.Equal(151.6M, result);
         }
 
         void Setup()
@@ -91,12 +109,12 @@ namespace SupermarketPricing.Test
                 {
                     priceOffers = new List<PriceOffer>
                     {
-                        new PriceOffer{product = new Product("Soda" ),Price = 30.2M,Offer = "3 for 130", category = Category.SpecialPrice},
-                        new PriceOffer{product = new Product("Fromage"),Price = 40.8M, Offer = "2 for 45", category = Category.SpecialPrice },
-                        new PriceOffer{product = new Product("Portable"),Price = 50.9M, Offer = "", category = Category.NoOffer },
-                        new PriceOffer{product = new Product("Pomme"),Price = 55.5M,Offer = "", category = Category.NoOffer},
-                        new PriceOffer{product = new Product("Banane"),Price = 10.1M,Offer = "5 get 3", category = Category.FreeProducts},
-
+                        new PriceOffer{product = new Product("Soda", ProductUnit.Each ),Price = 30.2M,Offer = "3 for 130", category = Category.SpecialPrice},
+                        new PriceOffer{product = new Product("Fromage", ProductUnit.Each ),Price = 40.8M, Offer = "2 for 45", category = Category.SpecialPrice },
+                        new PriceOffer{product = new Product("Portable", ProductUnit.Each),Price = 50.9M, Offer = "", category = Category.NoOffer },
+                        new PriceOffer{product = new Product("Pomme" , ProductUnit.Kilo),Price = 55.5M,Offer = "", category = Category.NoOffer},
+                        new PriceOffer{product = new Product("Banane" , ProductUnit.Kilo),Price = 10.1M,Offer = "5 get 3", category = Category.FreeProducts},
+                        new PriceOffer{product = new Product("Lait" , ProductUnit.Liter),Price = 25.2M,Offer = "2 Liter for 20", category = Category.weightedProductsOffer}
                     }
                 }
             };
