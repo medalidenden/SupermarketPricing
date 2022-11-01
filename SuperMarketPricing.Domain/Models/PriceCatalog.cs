@@ -1,10 +1,9 @@
-﻿using SuperMarketPricing.Domain.IServices;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace SuperMarketPricing.Domain.Models
 {
-    public class PriceCatalog : IPriceCatalog
+    public class PriceCatalog
     {
         public IList<PriceOffer> priceOffers { get; set; }
 
@@ -26,10 +25,20 @@ namespace SuperMarketPricing.Domain.Models
         {
             var OffersSpecialFree = priceOffers.FirstOrDefault(offering => offering.product.getName() == name && offering.category == Category.FreeProducts);
             if (OffersSpecialFree == null)
-                return priceOffers.FirstOrDefault(normalOffer => normalOffer.product.getName() == name).Price;
+                return computeWeightedOffer(name, quantity);
             else
             {
                 return OffersSpecialFree.ComputeSpecialFreeOffersPrice(quantity);
+            }
+        }
+        public decimal computeWeightedOffer(string name, int quantity)
+        {
+            var WeightedOffer = priceOffers.FirstOrDefault(offering => offering.product.getName() == name && offering.category == Category.weightedProductsOffer);
+            if (WeightedOffer == null)
+                return priceOffers.FirstOrDefault(normalOffer => normalOffer.product.getName() == name).Price;
+            else
+            {
+                return WeightedOffer.ComputeWeightedOfferPrice(quantity);
             }
         }
     }

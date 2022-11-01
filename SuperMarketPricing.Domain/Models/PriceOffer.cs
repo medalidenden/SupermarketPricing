@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace SuperMarketPricing.Domain.Models
 {
     public class PriceOffer
@@ -33,6 +34,23 @@ namespace SuperMarketPricing.Domain.Models
                 int usedoffer = quantity / SpecialQuantity;
 
                 return (usedoffer * newPrice) + (quantity % SpecialQuantity) * Price;
+            }
+            else
+            {
+                return Price * quantity;
+            }
+        }
+        public decimal ComputeWeightedOfferPrice(int quantity)
+        {
+            var offerIntheDeal = Offer.Split();
+            var NewQuantity = int.Parse(offerIntheDeal[0]);
+            Enum.TryParse(offerIntheDeal[1], out ProductUnit myUnit);
+            var NewPrice = int.Parse(offerIntheDeal[3]);
+            if (myUnit == product.getUnit())
+            {
+                int UsedOffer = quantity / NewQuantity;
+
+                return (UsedOffer * NewPrice) + (quantity % NewQuantity) * Price;
             }
             else
             {

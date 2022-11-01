@@ -5,6 +5,7 @@ namespace SuperMarketPricing.Domain.Models
     {
         NoOffer = 0,
         SpecialPrice = 1,
-        FreeProducts = 2
+        FreeProducts = 2,
+        weightedProductsOffer = 3
     }
 }
