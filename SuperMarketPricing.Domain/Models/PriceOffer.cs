@@ -22,5 +22,22 @@ namespace SuperMarketPricing.Domain.Models
                 return Price * quantity;
             }
         }
+        public decimal ComputeSpecialFreeOffersPrice(int quantity)
+        {
+            var offerIntheDeal = Offer.Split();
+            var SpecialQuantity = int.Parse(offerIntheDeal[0]);
+            var NewQuantity = int.Parse(offerIntheDeal[2]);
+            if (quantity >= SpecialQuantity)
+            {
+                decimal newPrice = NewQuantity * Price;
+                int usedoffer = quantity / SpecialQuantity;
+
+                return (usedoffer * newPrice) + (quantity % SpecialQuantity) * Price;
+            }
+            else
+            {
+                return Price * quantity;
+            }
+        }
     }
 }

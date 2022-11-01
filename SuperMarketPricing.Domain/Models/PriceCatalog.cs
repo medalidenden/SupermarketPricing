@@ -16,10 +16,20 @@ namespace SuperMarketPricing.Domain.Models
         {
             var OffersSpecial = priceOffers.FirstOrDefault(offering => offering.product.getName() == name && offering.category == Category.SpecialPrice);
             if (OffersSpecial == null)
-                return priceOffers.FirstOrDefault(normalOffer => normalOffer.product.getName() == name).Price;
+                return computeFreelOffer(name, quantity);
             else
             {
                 return OffersSpecial.ComputeSpecialOffersPrice(quantity);
+            }
+        }
+        public decimal computeFreelOffer(string name, int quantity)
+        {
+            var OffersSpecialFree = priceOffers.FirstOrDefault(offering => offering.product.getName() == name && offering.category == Category.FreeProducts);
+            if (OffersSpecialFree == null)
+                return priceOffers.FirstOrDefault(normalOffer => normalOffer.product.getName() == name).Price;
+            else
+            {
+                return OffersSpecialFree.ComputeSpecialFreeOffersPrice(quantity);
             }
         }
     }
