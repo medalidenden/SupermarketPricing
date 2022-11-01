@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31829.152
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupermarketPricing.Test", "SupermarketPricing.Test\SupermarketPricing.Test.csproj", "{16D1EBCD-1ED3-4BDA-93FD-919965442366}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarketPricing.Domain", "SuperMarketPricing.Domain\SuperMarketPricing.Domain.csproj", "{F5173EEC-DF8F-4DF8-97B5-0EDDDE977492}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16D1EBCD-1ED3-4BDA-93FD-919965442366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16D1EBCD-1ED3-4BDA-93FD-919965442366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16D1EBCD-1ED3-4BDA-93FD-919965442366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16D1EBCD-1ED3-4BDA-93FD-919965442366}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5173EEC-DF8F-4DF8-97B5-0EDDDE977492}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5173EEC-DF8F-4DF8-97B5-0EDDDE977492}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5173EEC-DF8F-4DF8-97B5-0EDDDE977492}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5173EEC-DF8F-4DF8-97B5-0EDDDE977492}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DE2D4019-3BE6-47FF-85E4-8CF94157C7E2}
+	EndGlobalSection
+EndGlobal
