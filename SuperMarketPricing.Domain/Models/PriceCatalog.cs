@@ -9,31 +9,27 @@ namespace SuperMarketPricing.Domain.Models
 
         public decimal ComputePriceForProduct(string name, int quantity)
         {
-            return ComputePriceForSpecialOfferProducts(name, quantity);
+            decimal amount = 0;
+            amount = ComputePriceForSpecialOfferProducts(name, quantity);
+            amount += ComputePriceForFreeProductOffer(name, quantity);
+            amount += ComputePriceForWeightedProductsOffer(name, quantity);
+
+            return amount == 0 ? PriceOffers.FirstOrDefault(normalOffer => normalOffer.Product.Name == name).Price : amount ;
         }
-        public decimal ComputePriceForSpecialOfferProducts(string name, int quantity)
+        public decimal ComputePriceForSpecialOfferProducts(string name, int quantity)  
         {
-            var specialProductOffer = PriceOffers.FirstOrDefault(offering => offering.Product.Name == name && offering.Category == Category.SpecialPrice);
-            
-            return specialProductOffer == null ?
-                ComputePriceForFreelProductOffer(name, quantity) :
-                specialProductOffer.ComputePriceForSpecialOffer(quantity); 
+            var specialProductOffer = PriceOffers.FirstOrDefault(offering => offering.Product.Name == name && offering.Category == Category.SpecialPrice);           
+            return specialProductOffer == null ? 0 : specialProductOffer.ComputePriceForSpecialOffer(quantity); 
         }
-        public decimal ComputePriceForFreelProductOffer(string name, int quantity)
+        public decimal ComputePriceForFreeProductOffer(string name, int quantity)
         {
-            var freeProductOffer = PriceOffers.FirstOrDefault(offering => offering.Product.Name == name && offering.Category == Category.FreeProduct);
-            
-            return freeProductOffer == null ?
-                ComputePriceForWeightedProductsOffer(name, quantity)  :
-                freeProductOffer.ComputePriceForFreeOffer(quantity); 
+            var freeProductOffer = PriceOffers.FirstOrDefault(offering => offering.Product.Name == name && offering.Category == Category.FreeProduct);         
+            return freeProductOffer == null ? 0  : freeProductOffer.ComputePriceForFreeOffer(quantity); 
         }
         public decimal ComputePriceForWeightedProductsOffer(string name, int quantity)
         {
-            var weightedProductOffer = PriceOffers.FirstOrDefault(offering => offering.Product.Name == name && offering.Category == Category.WeightedProducts);
-            
-            return weightedProductOffer == null ? 
-                PriceOffers.FirstOrDefault(normalOffer => normalOffer.Product.Name == name).Price :
-                weightedProductOffer.ComputePriceForWeightedOffer(quantity); 
+            var weightedProductOffer = PriceOffers.FirstOrDefault(offering => offering.Product.Name == name && offering.Category == Category.WeightedProducts);           
+            return weightedProductOffer == null ? 0 : weightedProductOffer.ComputePriceForWeightedOffer(quantity); 
         }
     }
 }
