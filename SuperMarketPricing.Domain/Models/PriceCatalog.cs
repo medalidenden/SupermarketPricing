@@ -25,7 +25,7 @@ namespace SuperMarketPricing.Domain.Models
             
             return freeProductOffer == null ?
                 ComputePriceForWeightedProductsOffer(name, quantity)  :
-                freeProductOffer.ComputePriceForSpecialFreeOffer(quantity); 
+                freeProductOffer.ComputePriceForFreeOffer(quantity); 
         }
         public decimal ComputePriceForWeightedProductsOffer(string name, int quantity)
         {
