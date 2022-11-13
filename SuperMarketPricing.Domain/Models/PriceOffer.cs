@@ -11,14 +11,20 @@ namespace SuperMarketPricing.Domain.Models
 
         public decimal ComputePriceForSpecialOffer(int quantity)
         {
+            if (string.IsNullOrEmpty(Offer))
+                throw new ArgumentNullException("Mandatory parameter", nameof(Offer));
+
             var offerInTheDeal = Offer.Split();
             var newQuantity = int.Parse(offerInTheDeal[0]);
             var newPrice = int.Parse(offerInTheDeal[2]);
 
             return quantity == newQuantity ? newPrice : Price * quantity ;
         }
-        public decimal ComputePriceForSpecialFreeOffer(int quantity)
+        public decimal ComputePriceForFreeOffer(int quantity)
         {
+            if (string.IsNullOrEmpty(Offer))
+                throw new ArgumentNullException("Mandatory parameter", nameof(Offer));
+
             var offerInTheDeal = Offer.Split();
             var specialQuantity = int.Parse(offerInTheDeal[0]);
             var newQuantity = int.Parse(offerInTheDeal[2]);
@@ -30,6 +36,9 @@ namespace SuperMarketPricing.Domain.Models
         }
         public decimal ComputePriceForWeightedOffer(int quantity)
         {
+            if (string.IsNullOrEmpty(Offer))
+                throw new ArgumentNullException("Mandatory parameter", nameof(Offer));
+
             var offerInTheDeal = Offer.Split();
             var newQuantity = int.Parse(offerInTheDeal[0]);
             Enum.TryParse(offerInTheDeal[1], out ProductUnit myUnit);
