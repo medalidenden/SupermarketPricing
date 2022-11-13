@@ -1,10 +1,9 @@
-﻿using SuperMarketPricing.Domain.IServices;
-using SuperMarketPricing.Domain.Models;
+﻿using SuperMarketPricing.Domain.Models;
 using System.Collections.Generic;
 
 namespace SuperMarketPricing.Domain
 {
-    public class SuperMarketPricer : ISuperMarketPricer
+    public class SuperMarketPricer
     {
         private Market market { get; set; }
         private IList<Product> shoppingList { get; set; } = new List<Product>();
@@ -15,24 +14,31 @@ namespace SuperMarketPricing.Domain
         public decimal CalculateTotalAmount()
         {
             decimal totalPrice = 0;
-            Dictionary<string, int> itemDictionary = new Dictionary<string, int>();
-            foreach (var product in this.shoppingList)
-            {
-                if (itemDictionary.ContainsKey(product.getName()))
-                {
-                    var currentCount = itemDictionary.GetValueOrDefault(product.getName());
-                    itemDictionary[product.getName()] = currentCount + 1;
-                }
-                else
-                {
-                    itemDictionary.Add(product.getName(), 1);
-                }
-            }
+            Dictionary<string, int> itemDictionary = GetCart();
             foreach (var key in itemDictionary.Keys)
             {
                 totalPrice += market.PriceCatalog.ComputePriceOfItemWithQuantity(key, itemDictionary.GetValueOrDefault(key));
             }
             return totalPrice;
+        }
+
+        private Dictionary<string, int> GetCart()
+        {
+            Dictionary<string, int> itemDictionary = new Dictionary<string, int>();
+            foreach (var product in this.shoppingList)
+            {
+                if (itemDictionary.ContainsKey(product.name))
+                {
+                    var currentCount = itemDictionary.GetValueOrDefault(product.name);
+                    itemDictionary[product.name] = currentCount + 1;
+                }
+                else
+                {
+                    itemDictionary.Add(product.name, 1);
+                }
+            }
+
+            return itemDictionary;
         }
 
         public void AddToShoppingList(Product product)
