@@ -14,31 +14,19 @@ namespace SuperMarketPricing.Domain.Models
             var offerIntheDeal = Offer.Split();
             var NewQuantity = int.Parse(offerIntheDeal[0]);
             var NewPrice = int.Parse(offerIntheDeal[2]);
-            if (quantity == NewQuantity)
-            {
-                return NewPrice;
-            }
-            else
-            {
-                return Price * quantity;
-            }
+
+            return quantity == NewQuantity ? NewPrice : Price * quantity ;
         }
         public decimal ComputeSpecialFreeOffersPrice(int quantity)
         {
             var offerIntheDeal = Offer.Split();
             var SpecialQuantity = int.Parse(offerIntheDeal[0]);
             var NewQuantity = int.Parse(offerIntheDeal[2]);
-            if (quantity >= SpecialQuantity)
-            {
-                decimal newPrice = NewQuantity * Price;
-                int usedoffer = quantity / SpecialQuantity;
+            decimal newPrice = NewQuantity * Price;
+            int usedoffer = quantity / SpecialQuantity;
 
-                return (usedoffer * newPrice) + (quantity % SpecialQuantity) * Price;
-            }
-            else
-            {
-                return Price * quantity;
-            }
+            return quantity < SpecialQuantity ? Price * quantity :
+                (usedoffer * newPrice) + (quantity % SpecialQuantity) * Price;
         }
         public decimal ComputeWeightedOfferPrice(int quantity)
         {
@@ -46,16 +34,10 @@ namespace SuperMarketPricing.Domain.Models
             var NewQuantity = int.Parse(offerIntheDeal[0]);
             Enum.TryParse(offerIntheDeal[1], out ProductUnit myUnit);
             var NewPrice = int.Parse(offerIntheDeal[3]);
-            if (myUnit == product.getUnit())
-            {
-                int UsedOffer = quantity / NewQuantity;
+            int UsedOffer = quantity / NewQuantity;
 
-                return (UsedOffer * NewPrice) + (quantity % NewQuantity) * Price;
-            }
-            else
-            {
-                return Price * quantity;
-            }
+            return myUnit != product.unit ? Price * quantity :
+                (UsedOffer * NewPrice) + (quantity % NewQuantity) * Price;
         }
     }
 }
