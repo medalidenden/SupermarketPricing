@@ -6,38 +6,38 @@ namespace SuperMarketPricing.Domain.Models
     {
         public string Offer { get; set; }
         public decimal Price { get; set; }
-        public Category category { get; set; }
-        public Product product { get; set; }
+        public Category Category { get; set; }
+        public Product Product { get; set; }
 
-        public decimal ComputeSpecialOffersPrice(int quantity)
+        public decimal ComputePriceForSpecialOffer(int quantity)
         {
-            var offerIntheDeal = Offer.Split();
-            var NewQuantity = int.Parse(offerIntheDeal[0]);
-            var NewPrice = int.Parse(offerIntheDeal[2]);
+            var offerInTheDeal = Offer.Split();
+            var newQuantity = int.Parse(offerInTheDeal[0]);
+            var newPrice = int.Parse(offerInTheDeal[2]);
 
-            return quantity == NewQuantity ? NewPrice : Price * quantity ;
+            return quantity == newQuantity ? newPrice : Price * quantity ;
         }
-        public decimal ComputeSpecialFreeOffersPrice(int quantity)
+        public decimal ComputePriceForSpecialFreeOffer(int quantity)
         {
-            var offerIntheDeal = Offer.Split();
-            var SpecialQuantity = int.Parse(offerIntheDeal[0]);
-            var NewQuantity = int.Parse(offerIntheDeal[2]);
-            decimal newPrice = NewQuantity * Price;
-            int usedoffer = quantity / SpecialQuantity;
+            var offerInTheDeal = Offer.Split();
+            var specialQuantity = int.Parse(offerInTheDeal[0]);
+            var newQuantity = int.Parse(offerInTheDeal[2]);
+            decimal newPrice = newQuantity * Price;
+            int usedOffer = quantity / specialQuantity;
 
-            return quantity < SpecialQuantity ? Price * quantity :
-                (usedoffer * newPrice) + (quantity % SpecialQuantity) * Price;
+            return quantity < specialQuantity ? Price * quantity :
+                (usedOffer * newPrice) + (quantity % specialQuantity) * Price;
         }
-        public decimal ComputeWeightedOfferPrice(int quantity)
+        public decimal ComputePriceForWeightedOffer(int quantity)
         {
-            var offerIntheDeal = Offer.Split();
-            var NewQuantity = int.Parse(offerIntheDeal[0]);
-            Enum.TryParse(offerIntheDeal[1], out ProductUnit myUnit);
-            var NewPrice = int.Parse(offerIntheDeal[3]);
-            int UsedOffer = quantity / NewQuantity;
+            var offerInTheDeal = Offer.Split();
+            var newQuantity = int.Parse(offerInTheDeal[0]);
+            Enum.TryParse(offerInTheDeal[1], out ProductUnit myUnit);
+            var newPrice = int.Parse(offerInTheDeal[3]);
+            int usedOffer = quantity / newQuantity;
 
-            return myUnit != product.unit ? Price * quantity :
-                (UsedOffer * NewPrice) + (quantity % NewQuantity) * Price;
+            return myUnit != Product.Unit ? Price * quantity :
+                (usedOffer * newPrice) + (quantity % newQuantity) * Price;
         }
     }
 }

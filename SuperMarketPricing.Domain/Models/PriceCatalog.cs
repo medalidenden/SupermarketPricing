@@ -5,35 +5,35 @@ namespace SuperMarketPricing.Domain.Models
 {
     public class PriceCatalog
     {
-        public IList<PriceOffer> priceOffers { get; set; }
+        public IList<PriceOffer> PriceOffers { get; set; }
 
-        public decimal ComputePriceOfItemWithQuantity(string name, int quantity)
+        public decimal ComputePriceForProduct(string name, int quantity)
         {
-            return computeSpecialOffer(name, quantity);
+            return ComputePriceForSpecialOfferProducts(name, quantity);
         }
-        public decimal computeSpecialOffer(string name, int quantity)
+        public decimal ComputePriceForSpecialOfferProducts(string name, int quantity)
         {
-            var OffersSpecial = priceOffers.FirstOrDefault(offering => offering.product.name == name && offering.category == Category.SpecialPrice);
+            var specialProductOffer = PriceOffers.FirstOrDefault(offering => offering.Product.Name == name && offering.Category == Category.SpecialPrice);
             
-            return OffersSpecial == null ? 
-                computeFreelOffer(name, quantity) : 
-                OffersSpecial.ComputeSpecialOffersPrice(quantity); 
+            return specialProductOffer == null ?
+                ComputePriceForFreelProductOffer(name, quantity) :
+                specialProductOffer.ComputePriceForSpecialOffer(quantity); 
         }
-        public decimal computeFreelOffer(string name, int quantity)
+        public decimal ComputePriceForFreelProductOffer(string name, int quantity)
         {
-            var OffersSpecialFree = priceOffers.FirstOrDefault(offering => offering.product.name == name && offering.category == Category.FreeProducts);
+            var freeProductOffer = PriceOffers.FirstOrDefault(offering => offering.Product.Name == name && offering.Category == Category.FreeProduct);
             
-            return OffersSpecialFree == null ? 
-                computeWeightedOffer(name, quantity)  : 
-                OffersSpecialFree.ComputeSpecialFreeOffersPrice(quantity); 
+            return freeProductOffer == null ?
+                ComputePriceForWeightedProductsOffer(name, quantity)  :
+                freeProductOffer.ComputePriceForSpecialFreeOffer(quantity); 
         }
-        public decimal computeWeightedOffer(string name, int quantity)
+        public decimal ComputePriceForWeightedProductsOffer(string name, int quantity)
         {
-            var WeightedOffer = priceOffers.FirstOrDefault(offering => offering.product.name == name && offering.category == Category.weightedProductsOffer);
+            var weightedProductOffer = PriceOffers.FirstOrDefault(offering => offering.Product.Name == name && offering.Category == Category.WeightedProducts);
             
-            return WeightedOffer == null ? 
-                priceOffers.FirstOrDefault(normalOffer => normalOffer.product.name == name).Price : 
-                WeightedOffer.ComputeWeightedOfferPrice(quantity); 
+            return weightedProductOffer == null ? 
+                PriceOffers.FirstOrDefault(normalOffer => normalOffer.Product.Name == name).Price :
+                weightedProductOffer.ComputePriceForWeightedOffer(quantity); 
         }
     }
 }

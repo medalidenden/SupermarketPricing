@@ -5,45 +5,46 @@ namespace SuperMarketPricing.Domain
 {
     public class SuperMarketPricer
     {
-        private Market market { get; set; }
-        private IList<Product> shoppingList { get; set; } = new List<Product>();
-        public SuperMarketPricer(Market _market)
+        private Market _market { get; set; }
+        private IList<Product> _productsList { get; set; } = new List<Product>();
+        public SuperMarketPricer(Market market)
         {
-            this.market = _market;
+            _market = market;
         }
+
         public decimal CalculateTotalAmount()
         {
             decimal totalPrice = 0;
-            Dictionary<string, int> itemDictionary = GetCart();
-            foreach (var key in itemDictionary.Keys)
+            Dictionary<string, int> Cart = GetCart();
+            foreach (var productKey in Cart.Keys)
             {
-                totalPrice += market.PriceCatalog.ComputePriceOfItemWithQuantity(key, itemDictionary.GetValueOrDefault(key));
+                totalPrice += _market.PriceCatalog.ComputePriceForProduct(productKey, Cart.GetValueOrDefault(productKey));
             }
             return totalPrice;
         }
 
         private Dictionary<string, int> GetCart()
         {
-            Dictionary<string, int> itemDictionary = new Dictionary<string, int>();
-            foreach (var product in this.shoppingList)
+            Dictionary<string, int> Cart = new Dictionary<string, int>();
+            foreach (var product in _productsList)
             {
-                if (itemDictionary.ContainsKey(product.name))
+                if (Cart.ContainsKey(product.Name))
                 {
-                    var currentCount = itemDictionary.GetValueOrDefault(product.name);
-                    itemDictionary[product.name] = currentCount + 1;
+                    var currentCount = Cart.GetValueOrDefault(product.Name);
+                    Cart[product.Name] = currentCount + 1;
                 }
                 else
                 {
-                    itemDictionary.Add(product.name, 1);
+                    Cart.Add(product.Name, 1);
                 }
             }
 
-            return itemDictionary;
+            return Cart;
         }
 
         public void AddToShoppingList(Product product)
         {
-            this.shoppingList.Add(product);
+            _productsList.Add(product);
         }
     }
 }

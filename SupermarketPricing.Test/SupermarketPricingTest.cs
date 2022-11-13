@@ -107,14 +107,14 @@ namespace SupermarketPricing.Test
             {
                 PriceCatalog = new PriceCatalog
                 {
-                    priceOffers = new List<PriceOffer>
+                    PriceOffers = new List<PriceOffer>
                     {
-                        new PriceOffer{product = new Product("Soda", ProductUnit.Each ),Price = 30.2M,Offer = "3 for 130", category = Category.SpecialPrice},
-                        new PriceOffer{product = new Product("Fromage", ProductUnit.Each ),Price = 40.8M, Offer = "2 for 45", category = Category.SpecialPrice },
-                        new PriceOffer{product = new Product("Portable", ProductUnit.Each),Price = 50.9M, Offer = "", category = Category.NoOffer },
-                        new PriceOffer{product = new Product("Pomme" , ProductUnit.Kilo),Price = 55.5M,Offer = "", category = Category.NoOffer},
-                        new PriceOffer{product = new Product("Banane" , ProductUnit.Kilo),Price = 10.1M,Offer = "5 get 3", category = Category.FreeProducts},
-                        new PriceOffer{product = new Product("Lait" , ProductUnit.Liter),Price = 25.2M,Offer = "2 Liter for 20", category = Category.weightedProductsOffer}
+                        new PriceOffer{Product = new Product("Soda", ProductUnit.Each ),Price = 30.2M,Offer = "3 for 130", Category = Category.SpecialPrice},
+                        new PriceOffer{Product = new Product("Fromage", ProductUnit.Each ),Price = 40.8M, Offer = "2 for 45", Category = Category.SpecialPrice },
+                        new PriceOffer{Product = new Product("Portable", ProductUnit.Each),Price = 50.9M, Offer = "", Category = Category.NoOffer },
+                        new PriceOffer{Product = new Product("Pomme" , ProductUnit.Kilo),Price = 55.5M,Offer = "", Category = Category.NoOffer},
+                        new PriceOffer{Product = new Product("Banane" , ProductUnit.Kilo),Price = 10.1M,Offer = "5 get 3", Category = Category.FreeProduct},
+                        new PriceOffer{Product = new Product("Lait" , ProductUnit.Liter),Price = 25.2M,Offer = "2 Liter for 20", Category = Category.WeightedProducts}
                     }
                 }
             };
