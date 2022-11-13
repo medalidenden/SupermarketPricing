@@ -4,8 +4,9 @@ namespace SuperMarketPricing.Domain.Models
 {
     public class Product
     {
-        private string name { get; set; }
-        private ProductUnit unit;
+        public string name { get; set; }
+
+        public ProductUnit unit { get; set; }
 
         public Product(string name, ProductUnit unit)
         {
@@ -13,15 +14,5 @@ namespace SuperMarketPricing.Domain.Models
             this.name = name;
             this.unit = unit;
         }
-
-        public string getName()
-        {
-            return name;
-        }
-        public ProductUnit getUnit()
-        {
-            return unit;
-        }
-
     }
 }
