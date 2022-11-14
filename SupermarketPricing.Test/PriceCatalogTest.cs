@@ -1,4 +1,5 @@
 ﻿using SuperMarketPricing.Domain.Models;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -10,7 +11,7 @@ namespace SupermarketPricing.Test
 
         [Theory]
         [InlineData(0, "Pomme", 55.5)]
-        public void ReturnZeroForNoOffer(int quantity, string name, decimal expected)
+        public void ReturnZeroForEmptyQuantity(int quantity, string name, decimal expected)
         {
             //Arrange 
             Setup();
@@ -24,6 +25,17 @@ namespace SupermarketPricing.Test
         }
 
         [Theory]
+        [InlineData(5, "Pomme")]
+        public void ThrowExceptionForNoOffer(int quantity, string name)
+        {
+            //Arrange 
+            Setup();
+
+            //Assert
+            Assert.Throws<ArgumentNullException>(() => _priceCatalog.ComputePriceForProduct(name, quantity));           
+        }
+
+        [Theory]
         [InlineData(2, "Fromage", 45)]
         public void ComputePriceForSpecialProduct(int quantity, string name, decimal expected)
         {
@@ -31,8 +43,8 @@ namespace SupermarketPricing.Test
             Setup();
 
             //Act
-            _priceCatalog.AddPriceOffer(new PriceOffer { Product = new Product(name, ProductUnit.Each), Price = 40.8M, Offer = "2 for 45", Category = Category.SpecialPrice });
-            var result = _priceCatalog.ComputePriceForSpecialOfferProducts(name, quantity);
+            var offer = new PriceOffer { Product = new Product(name, ProductUnit.Each), Price = 40.8M, Offer = "2 for 45", Category = Category.SpecialPrice };
+            var result = _priceCatalog.ComputePriceForSpecialOfferProducts(quantity, offer);
 
             //Assert
             Assert.Equal(result, expected);
@@ -46,8 +58,8 @@ namespace SupermarketPricing.Test
             Setup();
 
             //Act
-            _priceCatalog.AddPriceOffer(new PriceOffer { Product = new Product(name, ProductUnit.Kilo), Price = 10.1M, Offer = "5 get 3", Category = Category.FreeProduct });
-            var result = _priceCatalog.ComputePriceForFreeProductOffer(name, quantity);
+            var offer = new PriceOffer { Product = new Product(name, ProductUnit.Kilo), Price = 10.1M, Offer = "5 get 3", Category = Category.FreeProduct };
+            var result = _priceCatalog.ComputePriceForFreeProductOffer(quantity, offer);
 
             //Assert
             Assert.Equal(result, expected);
@@ -61,8 +73,8 @@ namespace SupermarketPricing.Test
             Setup();
 
             //Act
-            _priceCatalog.AddPriceOffer(new PriceOffer { Product = new Product(name, ProductUnit.Liter), Price = 25.2M, Offer = "2 Liter for 20", Category = Category.WeightedProducts });
-            var result = _priceCatalog.ComputePriceForWeightedProductsOffer(name, quantity);
+            var offer = new PriceOffer { Product = new Product(name, ProductUnit.Liter), Price = 25.2M, Offer = "2 Liter for 20", Category = Category.WeightedProducts };
+            var result = _priceCatalog.ComputePriceForWeightedProductsOffer(quantity, offer);
 
             //Assert
             Assert.Equal(result, expected);

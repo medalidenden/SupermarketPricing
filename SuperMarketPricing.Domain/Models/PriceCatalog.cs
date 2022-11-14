@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SuperMarketPricing.Domain.Models
@@ -12,26 +13,36 @@ namespace SuperMarketPricing.Domain.Models
         }
         public decimal ComputePriceForProduct(string name, int quantity)
         {
-            decimal amount = 0;
-            amount = ComputePriceForSpecialOfferProducts(name, quantity);
-            amount += ComputePriceForFreeProductOffer(name, quantity);
-            amount += ComputePriceForWeightedProductsOffer(name, quantity);
 
-            return amount == 0 ? PriceOffers.FirstOrDefault(normalOffer => normalOffer.Product.Name == name).Price : amount ;
+            var offer = PriceOffers.Where(o => o.Product.Name == name).FirstOrDefault();
+            if (offer == null )
+                throw new ArgumentNullException("Mandatory parameter", nameof(offer));
+
+            switch (offer.Category)
+            {
+                case Category.FreeProduct:
+                    return ComputePriceForFreeProductOffer(quantity, offer) ;
+
+                case Category.SpecialPrice:
+                    return ComputePriceForSpecialOfferProducts(quantity, offer);
+
+                case Category.WeightedProducts:
+                    return ComputePriceForWeightedProductsOffer(quantity, offer);
+
+                default:
+                    return PriceOffers.FirstOrDefault(normalOffer => normalOffer.Product.Name == name).Price;
+            }
         }
-        public decimal ComputePriceForSpecialOfferProducts(string name, int quantity)  
+        public decimal ComputePriceForSpecialOfferProducts(int quantity,PriceOffer specialProductOffer)  
         {
-            var specialProductOffer = PriceOffers.FirstOrDefault(offering => offering.Product.Name == name && offering.Category == Category.SpecialPrice);           
             return specialProductOffer == null ? 0 : specialProductOffer.ComputePriceForSpecialOffer(quantity); 
         }
-        public decimal ComputePriceForFreeProductOffer(string name, int quantity)
+        public decimal ComputePriceForFreeProductOffer(int quantity, PriceOffer freeProductOffer)
         {
-            var freeProductOffer = PriceOffers.FirstOrDefault(offering => offering.Product.Name == name && offering.Category == Category.FreeProduct);         
             return freeProductOffer == null ? 0  : freeProductOffer.ComputePriceForFreeOffer(quantity); 
         }
-        public decimal ComputePriceForWeightedProductsOffer(string name, int quantity)
+        public decimal ComputePriceForWeightedProductsOffer(int quantity, PriceOffer weightedProductOffer)
         {
-            var weightedProductOffer = PriceOffers.FirstOrDefault(offering => offering.Product.Name == name && offering.Category == Category.WeightedProducts);           
             return weightedProductOffer == null ? 0 : weightedProductOffer.ComputePriceForWeightedOffer(quantity); 
         }
     }
