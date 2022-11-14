@@ -24,7 +24,7 @@ namespace SupermarketPricing.Test
 
         [Theory]
         [InlineData(2)]
-        public void ReturnForNoOffer(int quantity)
+        public void ThrowExceptionForNoOffer(int quantity)
         {
             //Arrange;
             Setup(5);

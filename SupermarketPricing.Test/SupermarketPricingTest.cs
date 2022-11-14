@@ -1,6 +1,5 @@
 ﻿using SuperMarketPricing.Domain;
 using SuperMarketPricing.Domain.Models;
-using System.Collections.Generic;
 using Xunit;
 
 namespace SupermarketPricing.Test
