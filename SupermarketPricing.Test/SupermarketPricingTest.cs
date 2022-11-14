@@ -103,21 +103,14 @@ namespace SupermarketPricing.Test
 
         void Setup()
         {
-            _market = new Market
-            {
-                PriceCatalog = new PriceCatalog
-                {
-                    PriceOffers = new List<PriceOffer>
-                    {
-                        new PriceOffer{Product = new Product("Soda", ProductUnit.Each ),Price = 30.2M,Offer = "3 for 130", Category = Category.SpecialPrice},
-                        new PriceOffer{Product = new Product("Fromage", ProductUnit.Each ),Price = 40.8M, Offer = "2 for 45", Category = Category.SpecialPrice },
-                        new PriceOffer{Product = new Product("Portable", ProductUnit.Each),Price = 50.9M, Offer = "", Category = Category.NoOffer },
-                        new PriceOffer{Product = new Product("Pomme" , ProductUnit.Kilo),Price = 55.5M,Offer = "", Category = Category.NoOffer},
-                        new PriceOffer{Product = new Product("Banane" , ProductUnit.Kilo),Price = 10.1M,Offer = "5 get 3", Category = Category.FreeProduct},
-                        new PriceOffer{Product = new Product("Lait" , ProductUnit.Liter),Price = 25.2M,Offer = "2 Liter for 20", Category = Category.WeightedProducts}
-                    }
-                }
-            };
+            _market = new Market();
+            _market.PriceCatalog = new PriceCatalog();
+            _market.PriceCatalog.AddPriceOffer(new PriceOffer { Product = new Product("Soda", ProductUnit.Each), Price = 30.2M, Offer = "3 for 130", Category = Category.SpecialPrice });
+            _market.PriceCatalog.AddPriceOffer(new PriceOffer { Product = new Product("Fromage", ProductUnit.Each), Price = 40.8M, Offer = "2 for 45", Category = Category.SpecialPrice });
+            _market.PriceCatalog.AddPriceOffer(new PriceOffer { Product = new Product("Portable", ProductUnit.Each), Price = 50.9M, Offer = "", Category = Category.NoOffer });
+            _market.PriceCatalog.AddPriceOffer(new PriceOffer { Product = new Product("Pomme", ProductUnit.Kilo), Price = 55.5M, Offer = "", Category = Category.NoOffer });
+            _market.PriceCatalog.AddPriceOffer(new PriceOffer { Product = new Product("Banane", ProductUnit.Kilo), Price = 10.1M, Offer = "5 get 3", Category = Category.FreeProduct });
+            _market.PriceCatalog.AddPriceOffer(new PriceOffer { Product = new Product("Lait", ProductUnit.Liter), Price = 25.2M, Offer = "2 Liter for 20", Category = Category.WeightedProducts });
             _superMarketPricer = new SuperMarketPricer(_market);
         }
     }

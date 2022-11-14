@@ -18,7 +18,7 @@ namespace SupermarketPricing.Test
             Setup();
 
             //Act
-            _priceCatalog.PriceOffers.Add(new PriceOffer { Product = new Product(name, ProductUnit.Kilo), Price = 55.5M, Offer = "", Category = Category.NoOffer });
+            _priceCatalog.AddPriceOffer(new PriceOffer { Product = new Product(name, ProductUnit.Kilo), Price = 55.5M, Offer = "", Category = Category.NoOffer });
             var result = _priceCatalog.ComputePriceForProduct(name, quantity);
 
             //Assert
@@ -33,7 +33,7 @@ namespace SupermarketPricing.Test
             Setup();
 
             //Act
-            _priceCatalog.PriceOffers.Add(new PriceOffer { Product = new Product(name, ProductUnit.Each), Price = 40.8M, Offer = "2 for 45", Category = Category.SpecialPrice });
+            _priceCatalog.AddPriceOffer(new PriceOffer { Product = new Product(name, ProductUnit.Each), Price = 40.8M, Offer = "2 for 45", Category = Category.SpecialPrice });
             var result = _priceCatalog.ComputePriceForSpecialOfferProducts(name, quantity);
 
             //Assert
@@ -48,7 +48,7 @@ namespace SupermarketPricing.Test
             Setup();
 
             //Act
-            _priceCatalog.PriceOffers.Add(new PriceOffer { Product = new Product(name, ProductUnit.Kilo), Price = 10.1M, Offer = "5 get 3", Category = Category.FreeProduct });
+            _priceCatalog.AddPriceOffer(new PriceOffer { Product = new Product(name, ProductUnit.Kilo), Price = 10.1M, Offer = "5 get 3", Category = Category.FreeProduct });
             var result = _priceCatalog.ComputePriceForFreeProductOffer(name, quantity);
 
             //Assert
@@ -63,7 +63,7 @@ namespace SupermarketPricing.Test
             Setup();
 
             //Act
-            _priceCatalog.PriceOffers.Add(new PriceOffer { Product = new Product(name, ProductUnit.Liter), Price = 25.2M, Offer = "2 Liter for 20", Category = Category.WeightedProducts });
+            _priceCatalog.AddPriceOffer(new PriceOffer { Product = new Product(name, ProductUnit.Liter), Price = 25.2M, Offer = "2 Liter for 20", Category = Category.WeightedProducts });
             var result = _priceCatalog.ComputePriceForWeightedProductsOffer(name, quantity);
 
             //Assert

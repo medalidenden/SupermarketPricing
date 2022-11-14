@@ -5,8 +5,11 @@ namespace SuperMarketPricing.Domain.Models
 {
     public class PriceCatalog
     {
-        public IList<PriceOffer> PriceOffers { get; set; }
-
+        public IList<PriceOffer> PriceOffers = new List<PriceOffer>();
+        public void AddPriceOffer(PriceOffer offer)
+        {
+            PriceOffers.Add(offer);
+        }
         public decimal ComputePriceForProduct(string name, int quantity)
         {
             decimal amount = 0;
