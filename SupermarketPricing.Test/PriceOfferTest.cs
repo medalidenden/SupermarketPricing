@@ -1,4 +1,5 @@
-﻿using SuperMarketPricing.Domain.Models;
+﻿using SuperMarketPricing.Domain;
+using SuperMarketPricing.Domain.Models;
 using System;
 using Xunit;
 
@@ -6,20 +7,22 @@ namespace SupermarketPricing.Test
 {
     public class PriceOfferTest
     {
+        private IPricingModel _priceModel;
         private PriceOffer _priceOffer;
 
         [Theory]
-        [InlineData(0,0)]
+        [InlineData(0, 0)]
         public void ReturnZeroForNoProduct(int quantity, decimal expected)
         {
             //Arrange;
             Setup(1);
+            _priceModel = new ReturnDefaultPrice();
 
             //act
-            var result = _priceOffer.ComputePriceForSpecialOffer(quantity);
+            var result = _priceModel.ComputePriceForProduct(quantity, _priceOffer);
 
             //Assert
-            Assert.Equal(expected,result);
+            Assert.Equal(expected, result);
         }
 
         [Theory]
@@ -28,9 +31,10 @@ namespace SupermarketPricing.Test
         {
             //Arrange;
             Setup(5);
+            _priceModel = new BuyXforYPrice();
 
             //Assert
-            Assert.Throws<ArgumentNullException>(() => _priceOffer.ComputePriceForSpecialOffer(quantity));
+            Assert.Throws<ArgumentNullException>(() => _priceModel.ComputePriceForProduct(quantity, _priceOffer));
         }
 
         [Theory]
@@ -39,9 +43,10 @@ namespace SupermarketPricing.Test
         {
             //Arrange;
             Setup(1);
+            _priceModel = new BuyXforYPrice();
 
             //act
-            var result = _priceOffer.ComputePriceForSpecialOffer(quantity);
+            var result = _priceModel.ComputePriceForProduct(quantity, _priceOffer);
 
             //Assert
             Assert.Equal(expected, result);
@@ -53,9 +58,9 @@ namespace SupermarketPricing.Test
         {
             //Arrange;
             Setup(2);
-
+            _priceModel = new BuyXgetYForFree();
             //act
-            var result = _priceOffer.ComputePriceForFreeOffer(quantity);
+            var result = _priceModel.ComputePriceForProduct(quantity, _priceOffer);
 
             //Assert
             Assert.Equal(expected, result);
@@ -67,9 +72,10 @@ namespace SupermarketPricing.Test
         {
             //Arrange;
             Setup(3);
+            _priceModel = new BuyXunitForYprice();
 
             //act
-            var result = _priceOffer.ComputePriceForWeightedOffer(quantity);
+            var result = _priceModel.ComputePriceForProduct(quantity, _priceOffer);
 
             //Assert
             Assert.Equal(expected, result);

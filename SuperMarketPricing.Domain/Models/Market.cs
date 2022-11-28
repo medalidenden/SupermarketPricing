@@ -1,8 +1,15 @@
 ﻿
+using System.Collections.Generic;
+
 namespace SuperMarketPricing.Domain.Models
 {
     public class Market
     {
-        public PriceCatalog PriceCatalog { get; set; }
+        public IList<PriceOffer> PriceOffers { get; set; }
+
+        public void AddPriceOffer(PriceOffer priceOffer)
+        {
+            PriceOffers.Add(priceOffer);
+        }
     }
 }
