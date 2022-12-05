@@ -1,4 +1,5 @@
-﻿using SuperMarketPricing.Domain.Models;
+﻿using SuperMarketPricing.Domain.Interfaces;
+using SuperMarketPricing.Domain.Models;
 using System;
 
 namespace SuperMarketPricing.Domain
