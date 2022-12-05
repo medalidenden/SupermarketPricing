@@ -4,7 +4,6 @@ namespace SuperMarketPricing.Domain.Models
 {
     public class Product
     {
-        private IPricingModel pricecatalog { get; set; }
         public string Name { get; private set; }
         public int Total { get; private set; }
         public ProductUnit Unit { get; private set; }
@@ -21,23 +20,24 @@ namespace SuperMarketPricing.Domain.Models
             if (offer == null)
                 throw new ArgumentNullException("Mandatory parameter", nameof(offer));
 
+            PriceCalculator pricecalculator = new PriceCalculator();
             switch (offer.Category)
             {
                 case Category.FreeProduct:
-                    pricecatalog = new BuyXgetYForFree();
-                    return pricecatalog.ComputePriceForProduct(quantity, offer);
+                    pricecalculator.SetPriceStrategy(new BuyXgetYForFree());
+                    return pricecalculator.ComputePriceForProduct(quantity, offer);
 
                 case Category.SpecialPrice:
-                    pricecatalog = new BuyXforYPrice();
-                    return pricecatalog.ComputePriceForProduct(quantity, offer);
+                    pricecalculator.SetPriceStrategy(new BuyXforYPrice());
+                    return pricecalculator.ComputePriceForProduct(quantity, offer);
 
                 case Category.WeightedProducts:
-                    pricecatalog = new BuyXunitForYprice();
-                    return pricecatalog.ComputePriceForProduct(quantity, offer);
+                    pricecalculator.SetPriceStrategy(new BuyXunitForYprice());
+                    return pricecalculator.ComputePriceForProduct(quantity, offer);
 
                 default:
-                    pricecatalog = new ReturnDefaultPrice();
-                    return pricecatalog.ComputePriceForProduct(quantity, offer);
+                    pricecalculator.SetPriceStrategy(new ReturnDefaultPrice());
+                    return pricecalculator.ComputePriceForProduct(quantity, offer);
             }
         }
 
