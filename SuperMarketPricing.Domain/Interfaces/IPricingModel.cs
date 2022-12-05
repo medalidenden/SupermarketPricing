@@ -1,6 +1,6 @@
 ﻿using SuperMarketPricing.Domain.Models;
 
-namespace SuperMarketPricing.Domain
+namespace SuperMarketPricing.Domain.Interfaces
 {
     public interface IPricingModel
     {   

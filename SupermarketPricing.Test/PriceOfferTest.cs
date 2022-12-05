@@ -1,4 +1,5 @@
 ﻿using SuperMarketPricing.Domain;
+using SuperMarketPricing.Domain.Interfaces;
 using SuperMarketPricing.Domain.Models;
 using System;
 using Xunit;
