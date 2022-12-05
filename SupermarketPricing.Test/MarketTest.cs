@@ -1,6 +1,4 @@
-﻿
-
-using SuperMarketPricing.Domain.Models;
+﻿using SuperMarketPricing.Domain.Models;
 using System.Collections.Generic;
 using Xunit;
 

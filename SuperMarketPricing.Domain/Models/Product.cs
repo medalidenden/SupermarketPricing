@@ -4,23 +4,23 @@ namespace SuperMarketPricing.Domain.Models
 {
     public class Product
     {
-        public IPricingModel priceModel { get; set; }
-        private string name { get; set; }
-        private int total { get; set; }
-        private ProductUnit unit { get; set; }
+        private IPricingModel pricecatalog { get; set; }
+        public string Name { get; private set; }
+        public int Total { get; private set; }
+        public ProductUnit Unit { get; private set; }
 
         public Product(string _name, ProductUnit _unit)
         {
             if (string.IsNullOrEmpty(_name)) { throw new ArgumentNullException(nameof(_name)); }
-            name = _name;
-            unit = _unit;
-            total = 1;
+            Name = _name;
+            Unit = _unit;
+            Total = 1;
         }
         public decimal GetPrice(int quantity, PriceOffer offer)
         {
             if (offer == null)
                 throw new ArgumentNullException("Mandatory parameter", nameof(offer));
-            IPricingModel pricecatalog;
+
             switch (offer.Category)
             {
                 case Category.FreeProduct:
@@ -40,33 +40,10 @@ namespace SuperMarketPricing.Domain.Models
                     return pricecatalog.ComputePriceForProduct(quantity, offer);
             }
         }
-        public string Name
-        {
-            get
-            {
-                return this.name;
-            }
-        }
-
-        public ProductUnit Unit
-        {
-            get
-            {
-                return this.unit;
-            }
-        }
-
-        public int Total
-        {
-            get
-            {
-                return this.total;
-            }
-        }
 
         public void AddItem()
         {
-            this.total++;
+            Total++;
         }
     }
 }

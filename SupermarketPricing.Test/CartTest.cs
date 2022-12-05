@@ -19,7 +19,7 @@ namespace SupermarketPricing.Test
             _cart.AddToShoppingList(new Product("produit", ProductUnit.Each));
 
             //Assert
-            Assert.Equal(_cart.GetCart().Count, expected);
+            Assert.Equal(_cart.GetListProductByName().Count, expected);
         }
     }
 }

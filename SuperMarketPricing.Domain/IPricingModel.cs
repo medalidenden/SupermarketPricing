@@ -4,7 +4,6 @@ namespace SuperMarketPricing.Domain
 {
     public interface IPricingModel
     {   
-        decimal ComputePriceForProduct(int quantity, PriceOffer offer);
-        
+        decimal ComputePriceForProduct(int quantity, PriceOffer offer);    
     }
 }
