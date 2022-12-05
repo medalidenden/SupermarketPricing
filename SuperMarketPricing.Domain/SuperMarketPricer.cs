@@ -17,7 +17,7 @@ namespace SuperMarketPricing.Domain
         public decimal CalculateTotalAmount()
         {
             decimal totalPrice = 0;
-            Dictionary<string, int> listProducts = cart.GetCart();
+            Dictionary<string, int> listProducts = cart.GetListProductByName();
             foreach (var productKey in listProducts)
             {
                 var offer = market.PriceOffers.Where(c =>c.Product.Name == productKey.Key).FirstOrDefault();

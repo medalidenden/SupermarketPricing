@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace SuperMarketPricing.Domain.Models
 {
     public class PriceOffer

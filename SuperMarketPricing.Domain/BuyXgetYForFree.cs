@@ -5,8 +5,8 @@ namespace SuperMarketPricing.Domain
 {
     public class BuyXgetYForFree : IPricingModel
     {
-        public int minimumQuantity { get; set; }
-        public int freeItems { get; set; }
+        private int minimumQuantity { get; set; }
+        private int freeItems { get; set; }
         public decimal ComputePriceForProduct(int quantity, PriceOffer priceOffer)
         {
             if (string.IsNullOrEmpty(priceOffer.Offer))
